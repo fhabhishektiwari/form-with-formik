@@ -34,6 +34,10 @@ textarea {
   /* margin-bottom: 20px; */
 }
 
+.form-control {
+  margin-bottom: 5px;
+}
+
 .form-control-btn {
   width: 110px;
   margin: 10px auto;
@@ -52,4 +56,5 @@ textarea {
 
 .error {
   color: red;
+  font-size: 12px;
 }
