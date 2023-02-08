@@ -1,7 +1,6 @@
 import React from 'react'
-import {useFormik} from 'formik';
+import {Formik,Form,Field,ErrorMessage} from 'formik';
 import * as Yup from 'yup';
-
 const initialValues = {
     name: "Abhishek",
     email: "",
@@ -10,62 +9,49 @@ const initialValues = {
 const onSubmit=values=>{
     console.log(values);
 }
-
 const validationSchema=Yup.object({
     name:Yup.string().required("Required!"),
     email:Yup.string().email('Invalid email format').required('Required'),
     channel:Yup.string().required("Required"),
 })
-
 const SimpleForm = () => {
-    const formik=useFormik({
-        initialValues,
-        onSubmit,
-        // validate,
-        validationSchema,
-    })
-
-    // console.log("Form Values",formik.values);
-    // console.log("Form Errors",formik.errors);
-    console.log("Visited Field",formik.touched);
-
   return (
-    <div>
-      <form onSubmit={formik.handleSubmit}>
+    <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
+    >
+      <Form>
         <div className='form-control'>
             <label htmlFor='name'>Name</label>
-            <input
+            <Field
                 type="text" 
                 id="name" 
                 name="name" 
-                {...formik.getFieldProps('name')}
             />
-            {formik.touched.name && formik.errors.name?<div className='error'>{formik.errors.name}</div>:null}
+            <ErrorMessage name='name'/>
         </div>
         <div className='form-control'>
             <label htmlFor='email'>E-mail</label>
-            <input 
+            <Field 
                 type="email" 
                 id="email" 
                 name="email" 
-                {...formik.getFieldProps('email')}
             />
-            {formik.touched.email && formik.errors.email ? <div className='error'>{formik.errors.email}</div> : null}
+            <ErrorMessage name='email'/>
         </div>
         <div className='form-control'>
             <label htmlFor='channel'>Channel</label>
-            <input
+            <Field
                 type="text" 
                 id="channel" 
                 name="channel" 
-                {...formik.getFieldProps('channel')}
             />
-            {formik.touched.channel && formik.errors.channel ? <div className='error'>{formik.errors.channel}</div> : null}
+            <ErrorMessage name='channel' className='error'/>
         </div>
         <button type='submit' className='form-control-btn'>Submit</button>
-      </form>
-    </div>
+      </Form>
+    </Formik>
   )
 }
-
 export default SimpleForm
